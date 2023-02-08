@@ -58,6 +58,14 @@ public class Enemy : NPC
         //Сложение\вычитание позиции SpawnPoint для вычисления позиций внутри круга независимо от его местоположения.
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Player")
+        {
+            Debug.Log("Произошло взаимодействие");
+        }
+    }
+
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.yellow; 
