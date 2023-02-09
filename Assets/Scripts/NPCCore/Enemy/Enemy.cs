@@ -62,7 +62,7 @@ public class Enemy : NPC
     {
         if (collision.gameObject.tag == "Player")
         {
-            Debug.Log("Произошло взаимодействие");
+            collision.gameObject.GetComponent<Health>().TakeDamage(1);
         }
     }
 
