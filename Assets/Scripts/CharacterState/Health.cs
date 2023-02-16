@@ -4,10 +4,17 @@ using UnityEngine;
 
 public class Health : MonoBehaviour
 {
-    [field: SerializeField] public int MyHealth { get; private set; }
+    [field:SerializeField] public HealthBar HealthBar { get; private set; }
+    [field:SerializeField] public GameObject DamagePopupUI { get; private set; }
 
+    public int myHealth;
     private bool isDead = false;
 
+    private void Awake()
+    {
+        if (HealthBar == null ) { return; }
+        HealthBar.SetMaxHealth(myHealth);
+    }
     public bool IsDead()
     {
         return isDead;
@@ -15,7 +22,7 @@ public class Health : MonoBehaviour
 
     public void Die()
     {
-        if (MyHealth <= 0)
+        if (myHealth <= 0)
         {
             isDead = true;
         }
@@ -23,11 +30,21 @@ public class Health : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        if (MyHealth <= 0)
+        if (myHealth <= 0)
         {
-            MyHealth = 0;
+            myHealth = 0;
             return;
         }
-        MyHealth = MyHealth - damage;
+        DamagePopup(damage);
+        myHealth = myHealth - damage;
+        if (HealthBar == null) { return; }
+        HealthBar.SetHealth(myHealth);
+    }
+
+    private void DamagePopup(int damage)
+    {
+        if (DamagePopupUI == null) { return; }
+        GameObject Popup = Instantiate(DamagePopupUI, transform.position, Quaternion.identity);
+        //Popup.GetComponentInChildren<TextMesh>().text = damage.ToString();
     }
 }

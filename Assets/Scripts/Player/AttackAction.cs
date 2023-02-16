@@ -40,7 +40,7 @@ public class AttackAction : MonoBehaviour
         if (!CanAttack(attackRate, nextAttackTime)) return;
         nextAttackTime = Time.time + 1f / attackRate;
 
-        animator.SetTrigger("Attack");
+        //animator.SetTrigger("Attack");
         GiveDamage();
 
     }
@@ -50,7 +50,7 @@ public class AttackAction : MonoBehaviour
         Collider2D[] hitedEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange);
         foreach (Collider2D target in hitedEnemies)
         {
-            if (target.GetComponent<Health>() == null) continue;
+            if (target.GetComponent<Health>() == null || target.tag == this.tag) continue;
             target.GetComponent<Health>().TakeDamage(attackDamage);
         }
     }
